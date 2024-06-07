@@ -1,6 +1,8 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+use DocumentFilter\InvalidDataTypeException;
+use DocumentFilter\FileNotFoundException;
 
 require_once __DIR__ . '/../src/functions.php';
 
@@ -12,7 +14,7 @@ class DocumentFilterTest extends TestCase
     {
         $expected = [
             [
-                'id' => 1,
+                'id' => "1",
                 'document_type' => 'invoice',
                 'partner' => (object)['id' => 1, 'name' => 'Kovács József'],
                 'items' => [
@@ -20,7 +22,7 @@ class DocumentFilterTest extends TestCase
                 ]
             ],
             [
-                'id' => 2,
+                'id' => "2",
                 'document_type' => 'proforma',
                 'partner' => (object)['id' => 23, 'name' => 'Kiss János'],
                 'items' => [
@@ -29,7 +31,7 @@ class DocumentFilterTest extends TestCase
                 ]
             ],
             [
-                'id' => 3,
+                'id' => "3",
                 'document_type' => 'receipt',
                 'partner' => (object)['id' => 354, 'name' => 'Nagy Béla'],
                 'items' => [
@@ -39,7 +41,7 @@ class DocumentFilterTest extends TestCase
                 ]
             ],
             [
-                'id' => 4,
+                'id' => "4",
                 'document_type' => 'invoice',
                 'partner' => (object)['id' => 354, 'name' => 'Nagy Béla'],
                 'items' => [
@@ -49,7 +51,7 @@ class DocumentFilterTest extends TestCase
                 ]
             ],
             [
-                'id' => 5,
+                'id' => "5",
                 'document_type' => 'receipt',
                 'partner' => (object)['id' => 354, 'name' => 'Nagy Béla'],
                 'items' => [
@@ -57,7 +59,7 @@ class DocumentFilterTest extends TestCase
                 ]
             ],
             [
-                'id' => 6,
+                'id' => "6",
                 'document_type' => 'invoice',
                 'partner' => (object)['id' => 1, 'name' => 'Kovács József'],
                 'items' => [
@@ -65,7 +67,7 @@ class DocumentFilterTest extends TestCase
                 ]
             ],
             [
-                'id' => 7,
+                'id' => "7",
                 'document_type' => 'invoice',
                 'partner' => (object)['id' => 23, 'name' => 'Kiss János'],
                 'items' => [
@@ -74,7 +76,7 @@ class DocumentFilterTest extends TestCase
                 ]
             ],
             [
-                'id' => 8,
+                'id' => "8",
                 'document_type' => 'receipt',
                 'partner' => (object)[],
                 'items' => [
@@ -82,7 +84,7 @@ class DocumentFilterTest extends TestCase
                 ]
             ],
             [
-                'id' => 9,
+                'id' => "9",
                 'document_type' => 'proforma',
                 'partner' => (object)['id' => 1, 'name' => 'Kovács József'],
                 'items' => [
@@ -91,7 +93,7 @@ class DocumentFilterTest extends TestCase
                 ]
             ],
             [
-                'id' => 10,
+                'id' => "10",
                 'document_type' => 'invoice',
                 'partner' => (object)['id' => 1, 'name' => 'Kovács József'],
                 'items' => [
@@ -100,7 +102,7 @@ class DocumentFilterTest extends TestCase
                 ]
             ],
             [
-                'id' => 11,
+                'id' => "11",
                 'document_type' => 'invoice',
                 'partner' => (object)['id' => 354, 'name' => 'Nagy Béla'],
                 'items' => [
@@ -108,7 +110,7 @@ class DocumentFilterTest extends TestCase
                 ]
             ],
             [
-                'id' => 12,
+                'id' => "12",
                 'document_type' => 'invoice',
                 'partner' => (object)['id' => 354, 'name' => 'Nagy Béla'],
                 'items' => [
@@ -119,6 +121,22 @@ class DocumentFilterTest extends TestCase
         ];
 
         $documents = parseCsv(__DIR__ . '/document_test_list.csv');
+        print_r($documents);  // Add this line to print the actual documents
         $this->assertEquals($expected, $documents);
+    }
+
+    public function testParseCsvWithInvalidData()
+    {
+        $this->expectException(InvalidDataTypeException::class);
+
+        $invalidCsvContent = 'id;document_type;partner;items
+1;invoice;invalid_json;[{"name":"alma","unit_price":5000,"quantity":5}]';
+
+        $tempFile = tempnam(sys_get_temp_dir(), 'csv');
+        file_put_contents($tempFile, $invalidCsvContent);
+
+        parseCsv($tempFile);
+
+        unlink($tempFile);
     }
 }
