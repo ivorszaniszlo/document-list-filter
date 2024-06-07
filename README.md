@@ -3,9 +3,15 @@
 
 This project filters documents from a CSV file based on given parameters. The script accepts three parameters: document type, customer ID, and minimum total value.
 
+## Description
+
+This project filters and lists document data from a CSV file based on given parameters.
+
 ## Requirements
 
 - PHP 7.4 or higher
+
+- PHPUnit 9.5 or higher
 
 ## Installation
 
@@ -17,6 +23,8 @@ This project filters documents from a CSV file based on given parameters. The sc
    ```
 
 2. Ensure the `document_list.csv` file is in the same directory as the script.
+
+3. Run composer install to install dependencies.
 
 ## Usage
 
@@ -34,12 +42,30 @@ php document_list.php invoice 1 12500
 
 This command filters documents of type `invoice`, with customer ID `1`, and a minimum total value of `12500`.
 
+## Running Tests
+
+To run the tests, use the following command:
+
+```sh
+php vendor/bin/phpunit --colors=always tests/DocumentFilterTest.php
+```
+
 ## Directory Structure
 
-- `document_list.php` - The main script for filtering documents.
-- `document_list.csv` - The CSV file containing the document data.
-- `tests/` - Directory containing unit tests.
-- `README.md` - This file.
+/your-project-directory
+    /src
+        functions.php
+        document_list.php
+    /tests
+        DocumentFilterTest.php
+        document_test_list.csv
+    document_list.csv
+    phpunit.xml
+    .gitignore
+    README.md
+    composer.json
+    composer.lock
+    
 
 ## Development
 
@@ -74,3 +100,13 @@ If you have suggestions or improvements, feel free to create a pull request.
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+
+### .gitignore
+
+```plaintext
+/vendor/
+/.phpunit.cache/
+ ```
+
+
