@@ -1,4 +1,7 @@
 {
+    "name": "szaniszloivor/document-list-filter",
+    "description": "This project filters and lists document data from a CSV file based on given parameters.",
+    "type": "project",
     "require-dev": {
         "phpunit/phpunit": "^11.2"
     },
@@ -6,5 +9,16 @@
         "psr-4": {
             "DocumentFilter\\": "src/"
         }
-    }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "authors": [
+        {
+            "name": "Szaniszló Ivor",
+            "email": "szaniszlo.ivor@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "license": "MIT"
 }
