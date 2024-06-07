@@ -31,13 +31,13 @@ This project filters and lists document data from a CSV file based on given para
 Run the script with the following parameters:
 
 ```sh
-php document_list.php <document_type> <customer_id> <min_total>
+php src/document_list.php <document_type> <customer_id> <min_total>
 ```
 
 ### Example
 
 ```sh
-php document_list.php invoice 1 12500
+php src/document_list.php invoice 1 12500
 ```
 
 This command filters documents of type `invoice`, with customer ID `1`, and a minimum total value of `12500`.
@@ -59,7 +59,7 @@ php vendor/bin/phpunit --colors=always tests/DocumentFilterTest.php
         Configuration.php
         CsvParser.php
         document_list.php
-        functionsphp
+        DocumentService.php
     /tests
         document_test_list.csv
         DocumentFilterTest.php

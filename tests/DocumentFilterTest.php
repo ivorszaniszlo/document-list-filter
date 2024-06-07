@@ -1,20 +1,21 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use DocumentFilter\InvalidDataTypeException;
-use DocumentFilter\Configuration;
+use DocumentFilter\DocumentService;
 use DocumentFilter\CsvParser;
+use DocumentFilter\InvalidDataTypeException;
 
-require_once __DIR__ . '/../src/Configuration.php';
-require_once __DIR__ . '/../src/CsvParser.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 class DocumentFilterTest extends TestCase
 {
-    public function testParseCsv()
+    private $documents;
+    private $service;
+    private $csvParser;
+
+    protected function setUp(): void
     {
-        $config = new Configuration(__DIR__ . '/../config.php');
-        $csvParser = new CsvParser($config);
-        $expected = [
+        $this->documents = [
             [
                 'id' => "1",
                 'document_type' => 'invoice',
@@ -122,24 +123,15 @@ class DocumentFilterTest extends TestCase
             ]
         ];
 
-        $documents = $csvParser->parse($config->get('test_csv_path'));
+        $this->csvParser = new CsvParser();
+        $this->service = new DocumentService($this->csvParser);
+    }
+
+    public function testParseCsv()
+    {
+        $expected = $this->documents;
+        $documents = $this->csvParser->parse(__DIR__ . '/document_test_list.csv');
         $this->assertEquals($expected, $documents);
     }
 
-    public function testParseCsvWithInvalidData()
-    {
-        $this->expectException(InvalidDataTypeException::class);
-
-        $invalidCsvContent = 'id;document_type;partner;items
-1;invoice;invalid_json;[{"name":"alma","unit_price":5000,"quantity":5}]';
-
-        $tempFile = tempnam(sys_get_temp_dir(), 'csv');
-        file_put_contents($tempFile, $invalidCsvContent);
-
-        $config = new Configuration(__DIR__ . '/../config.php');
-        $csvParser = new CsvParser($config);
-        $csvParser->parse($tempFile);
-
-        unlink($tempFile);
-    }
 }

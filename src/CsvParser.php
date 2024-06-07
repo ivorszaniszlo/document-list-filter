@@ -5,22 +5,14 @@ namespace DocumentFilter;
 use Exception;
 
 class InvalidDataTypeException extends Exception {}
-class FileNotFoundException extends Exception {}
 
 class CsvParser
 {
-    private $config;
-
-    public function __construct(Configuration $config)
-    {
-        $this->config = $config;
-    }
-
     public function parse($filename)
     {
         $documents = [];
         if (!file_exists($filename)) {
-            throw new FileNotFoundException("File not found: $filename");
+            throw new Exception("File not found: $filename");
         }
         if (($handle = fopen($filename, 'r')) !== false) {
             $headers = fgetcsv($handle, null, ';');

@@ -1,9 +1,8 @@
 <?php
 
-require_once __DIR__ . '/Configuration.php';
-require_once __DIR__ . '/CsvParser.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
-use DocumentFilter\Configuration;
+use DocumentFilter\DocumentService;
 use DocumentFilter\CsvParser;
 
 if ($argc != 4) {
@@ -15,6 +14,9 @@ $documentType = $argv[1];
 $customerId = $argv[2];
 $minSum = $argv[3];
 
-$config = new Configuration(__DIR__ . '/../config.php');
-$csvParser = new CsvParser($config);
-$documents = $csvParser->parse($config->get('csv_path'));
+$csvParser = new CsvParser();
+$service = new DocumentService($csvParser);
+
+$documents = $csvParser->parse('document_list.csv');
+$filteredDocuments = $service->filterDocuments($documents, $documentType, $customerId, $minSum);
+$service->printDocuments($filteredDocuments);
