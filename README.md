@@ -62,7 +62,7 @@ php vendor/bin/phpunit --colors=always tests/DocumentFilterTest.php
         DocumentService.php
     /tests
         document_test_list.csv
-        DocumentFilterTest.php
+        DocumentServiceTest.php
     .gitignore
     composer.json
     composer.lock
