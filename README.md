@@ -47,7 +47,7 @@ This command filters documents of type `invoice`, with customer ID `1`, and a mi
 To run the tests, use the following command:
 
 ```sh
-php vendor/bin/phpunit --colors=always tests/DocumentFilterTest.php
+php vendor/bin/phpunit tests/DocumentServiceTest.php
 ```
 
 ## Directory Structure
