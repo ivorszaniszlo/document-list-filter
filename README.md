@@ -52,19 +52,26 @@ php vendor/bin/phpunit --colors=always tests/DocumentFilterTest.php
 
 ## Directory Structure
 
-/your-project-directory
+/document-list-filter
+    /doc
+        Task.pdf
     /src
-        functions.php
+        Configuration.php
+        CsvParser.php
         document_list.php
+        functionsphp
     /tests
-        DocumentFilterTest.php
         document_test_list.csv
-    document_list.csv
-    phpunit.xml
+        DocumentFilterTest.php
     .gitignore
-    README.md
     composer.json
     composer.lock
+    config.php
+    document_list.csv
+    LICENSE
+    phpunit.xml
+    phpunit.xml.bak
+    README.md
 
 
 ## Development
