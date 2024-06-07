@@ -65,7 +65,7 @@ php vendor/bin/phpunit --colors=always tests/DocumentFilterTest.php
     README.md
     composer.json
     composer.lock
-    
+
 
 ## Development
 
@@ -100,13 +100,5 @@ If you have suggestions or improvements, feel free to create a pull request.
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-
-### .gitignore
-
-```plaintext
-/vendor/
-/.phpunit.cache/
- ```
 
 
