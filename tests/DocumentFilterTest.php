@@ -2,17 +2,18 @@
 
 use PHPUnit\Framework\TestCase;
 use DocumentFilter\InvalidDataTypeException;
-use DocumentFilter\FileNotFoundException;
+use DocumentFilter\Configuration;
+use DocumentFilter\CsvParser;
 
-require_once __DIR__ . '/../src/functions.php';
-
-use function DocumentFilter\parseCsv;
+require_once __DIR__ . '/../src/Configuration.php';
+require_once __DIR__ . '/../src/CsvParser.php';
 
 class DocumentFilterTest extends TestCase
 {
     public function testParseCsv()
     {
-        $config = require __DIR__ . '/../config.php';
+        $config = new Configuration(__DIR__ . '/../config.php');
+        $csvParser = new CsvParser($config);
         $expected = [
             [
                 'id' => "1",
@@ -121,7 +122,7 @@ class DocumentFilterTest extends TestCase
             ]
         ];
 
-        $documents = parseCsv($config['test_csv_path']);
+        $documents = $csvParser->parse($config->get('test_csv_path'));
         $this->assertEquals($expected, $documents);
     }
 
@@ -135,7 +136,9 @@ class DocumentFilterTest extends TestCase
         $tempFile = tempnam(sys_get_temp_dir(), 'csv');
         file_put_contents($tempFile, $invalidCsvContent);
 
-        parseCsv($tempFile);
+        $config = new Configuration(__DIR__ . '/../config.php');
+        $csvParser = new CsvParser($config);
+        $csvParser->parse($tempFile);
 
         unlink($tempFile);
     }
