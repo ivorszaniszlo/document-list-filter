@@ -12,6 +12,7 @@ class DocumentFilterTest extends TestCase
 {
     public function testParseCsv()
     {
+        $config = require __DIR__ . '/../config.php';
         $expected = [
             [
                 'id' => "1",
@@ -120,8 +121,7 @@ class DocumentFilterTest extends TestCase
             ]
         ];
 
-        $documents = parseCsv(__DIR__ . '/document_test_list.csv');
-        print_r($documents);  // Add this line to print the actual documents
+        $documents = parseCsv($config['test_csv_path']);
         $this->assertEquals($expected, $documents);
     }
 

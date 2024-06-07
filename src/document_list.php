@@ -13,4 +13,5 @@ $documentType = $argv[1];
 $customerId = $argv[2];
 $minSum = $argv[3];
 
-$documents = parseCsv('document_list.csv');
+$config = require __DIR__ . '/../config.php';
+$documents = parseCsv($config['csv_path']);
