@@ -24,4 +24,4 @@ Thumbs.db
 *.sublime-workspace
 
 # Temp
-README.md
+/.phpunit.result.cache
