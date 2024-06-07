@@ -10,21 +10,24 @@ This project filters and lists document data from a CSV file based on given para
 ## Requirements
 
 - PHP 7.4 or higher
-
 - PHPUnit 9.5 or higher
 
 ## Installation
 
 1. Clone the repository:
 
-   ```sh
-   git clone https://github.com/ivorszaniszlo/document-list-filter.git
-   cd document-list-filter
-   ```
+    ```sh
+    git clone https://github.com/ivorszaniszlo/document-list-filter.git
+    cd document-list-filter
+    ```
 
-2. Ensure the `document_list.csv` file is in the same directory as the script.
+2. Install dependencies using Composer:
 
-3. Run composer install to install dependencies.
+    ```sh
+    composer install
+    ```
+
+3. Ensure the `document_list.csv` file is in the appropriate directory as specified in the `config.php` file.
 
 ## Usage
 
@@ -47,11 +50,12 @@ This command filters documents of type `invoice`, with customer ID `1`, and a mi
 To run the tests, use the following command:
 
 ```sh
-php vendor/bin/phpunit tests/DocumentServiceTest.php
+vendor/bin/phpunit tests/DocumentServiceTest.php
 ```
 
 ## Directory Structure
 
+```plaintext
 /document-list-filter
     /doc
         Task.pdf
@@ -72,7 +76,7 @@ php vendor/bin/phpunit tests/DocumentServiceTest.php
     phpunit.xml
     phpunit.xml.bak
     README.md
-
+```
 
 ## Development
 
@@ -86,15 +90,15 @@ Unit tests have been added using PHPUnit. To run the tests, follow these steps:
 
 1. Install PHPUnit:
 
-   ```sh
-   composer require --dev phpunit/phpunit
-   ```
+    ```sh
+    composer require --dev phpunit/phpunit
+    ```
 
 2. Run the tests:
 
-   ```sh
-   vendor/bin/phpunit tests
-   ```
+    ```sh
+    vendor/bin/phpunit tests
+    ```
 
 ## Contributing
 
@@ -107,5 +111,3 @@ If you have suggestions or improvements, feel free to create a pull request.
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-
