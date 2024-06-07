@@ -46,7 +46,7 @@ try {
     $service = new DocumentService($csvParser);
 
     // Parse the CSV file
-    $documents = $csvParser.parse(__DIR__ . '/../document_list.csv');
+    $documents = $csvParser->parse(__DIR__ . '/../document_list.csv');
 
     // Filter the documents based on the parameters
     $filteredDocuments = $service->filterDocuments($documents, $documentType, $customerId, $minSum);
