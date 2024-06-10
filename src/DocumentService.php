@@ -15,13 +15,32 @@ class DocumentService
     private $csvParser;
 
     /**
+     * @var Configuration The configuration instance.
+     */
+    private $config;
+
+    /**
      * DocumentService constructor.
      * 
      * @param CsvParser $csvParser The CSV parser instance.
+     * @param Configuration $config The configuration instance.
      */
-    public function __construct(CsvParser $csvParser)
+    public function __construct(CsvParser $csvParser, Configuration $config)
     {
         $this->csvParser = $csvParser;
+        $this->config = $config;
+    }
+
+    /**
+     * Loads and parses the CSV file.
+     * 
+     * @return array The parsed documents.
+     * @throws Exception If the file cannot be parsed.
+     */
+    public function loadDocuments(): array
+    {
+        $csvPath = $this->config->get('csv_path');
+        return $this->csvParser->parse($csvPath);
     }
 
     /**
