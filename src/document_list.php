@@ -4,6 +4,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use DocumentFilter\DocumentService;
 use DocumentFilter\CsvParser;
+use DocumentFilter\Configuration;
 
 /**
  * This script filters and prints documents based on provided parameters.
@@ -43,10 +44,11 @@ try {
     list($documentType, $customerId, $minSum) = getCommandLineArguments($argc, $argv);
 
     $csvParser = new CsvParser();
-    $service = new DocumentService($csvParser);
+    $config = new Configuration(__DIR__ . '/../config.php');
+    $service = new DocumentService($csvParser, $config);
 
-    // Parse the CSV file
-    $documents = $csvParser->parse(__DIR__ . '/../document_list.csv');
+    // Load and parse the CSV file
+    $documents = $service->loadDocuments();
 
     // Filter the documents based on the parameters
     $filteredDocuments = $service->filterDocuments($documents, $documentType, $customerId, $minSum);
