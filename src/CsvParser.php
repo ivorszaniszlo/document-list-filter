@@ -2,6 +2,7 @@
 
 namespace DocumentFilter;
 
+use DocumentFilter\Interfaces\CsvParserInterface;
 use Exception;
 
 /**
@@ -16,7 +17,7 @@ class InvalidDataTypeException extends Exception {}
  * 
  * Parses CSV files and returns an array of documents.
  */
-class CsvParser
+class CsvParser implements CsvParserInterface
 {
     /**
      * Parses a CSV file and returns an array of documents.

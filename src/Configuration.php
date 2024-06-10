@@ -2,12 +2,14 @@
 
 namespace DocumentFilter;
 
+use DocumentFilter\Interfaces\ConfigurationInterface;
+
 /**
  * Class Configuration
  * 
  * Handles the configuration settings for the application.
  */
-class Configuration
+class Configuration implements ConfigurationInterface
 {
     /**
      * @var array The configuration settings.
@@ -36,7 +38,7 @@ class Configuration
      * @param string $key The key of the configuration setting.
      * @return mixed The value of the configuration setting or null if the key is not set.
      */
-    public function get($key)
+    public function get(string $key)
     {
         return isset($this->settings[$key]) ? $this->settings[$key] : null;
     }

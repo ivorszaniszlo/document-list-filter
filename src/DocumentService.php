@@ -2,30 +2,34 @@
 
 namespace DocumentFilter;
 
+use DocumentFilter\Interfaces\CsvParserInterface;
+use DocumentFilter\Interfaces\ConfigurationInterface;
+use DocumentFilter\Interfaces\DocumentServiceInterface;
+
 /**
  * Class DocumentService
  * 
  * Provides services for filtering and printing documents.
  */
-class DocumentService
+class DocumentService implements DocumentServiceInterface
 {
     /**
-     * @var CsvParser The CSV parser instance.
+     * @var CsvParserInterface The CSV parser instance.
      */
     private $csvParser;
 
     /**
-     * @var Configuration The configuration instance.
+     * @var ConfigurationInterface The configuration instance.
      */
     private $config;
 
     /**
      * DocumentService constructor.
      * 
-     * @param CsvParser $csvParser The CSV parser instance.
-     * @param Configuration $config The configuration instance.
+     * @param CsvParserInterface $csvParser The CSV parser instance.
+     * @param ConfigurationInterface $config The configuration instance.
      */
-    public function __construct(CsvParser $csvParser, Configuration $config)
+    public function __construct(CsvParserInterface $csvParser, ConfigurationInterface $config)
     {
         $this->csvParser = $csvParser;
         $this->config = $config;
@@ -122,7 +126,7 @@ class DocumentService
     private function printRow(array $row): void
     {
         foreach ($row as $cell) {
-            echo str_pad($cell, 20);
+            echo str_pad((string)$cell, 20);
         }
         echo PHP_EOL;
     }

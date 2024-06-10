@@ -25,7 +25,7 @@ define('EXPECTED_ARGC', 4);
 function getCommandLineArguments(int $argc, array $argv): array
 {
     if ($argc !== EXPECTED_ARGC) {
-        throw new InvalidArgumentException('Ambiguous number of parameters!' . PHP_EOL .
+        throw new InvalidArgumentException('Incorrect number of parameters!' . PHP_EOL .
             'Usage: php document_list.php <document_type> <customer_id> <min_sum>');
     }
 
@@ -43,8 +43,8 @@ function getCommandLineArguments(int $argc, array $argv): array
 try {
     list($documentType, $customerId, $minSum) = getCommandLineArguments($argc, $argv);
 
-    $csvParser = new CsvParser();
     $config = new Configuration(__DIR__ . '/../config.php');
+    $csvParser = new CsvParser();
     $service = new DocumentService($csvParser, $config);
 
     // Load and parse the CSV file

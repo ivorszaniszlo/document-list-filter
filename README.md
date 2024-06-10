@@ -60,6 +60,10 @@ vendor/bin/phpunit tests/DocumentServiceTest.php
     /doc
         Task.pdf
     /src
+        /Interfaces
+            ConfigurationInterface.php
+            CsvParserInterface.php
+            DocumentServiceInterface.php
         Configuration.php
         CsvParser.php
         document_list.php

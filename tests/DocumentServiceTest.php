@@ -3,7 +3,9 @@
 use PHPUnit\Framework\TestCase;
 use DocumentFilter\CsvParser;
 use DocumentFilter\DocumentService;
+use DocumentFilter\Interfaces\ConfigurationInterface;
 use DocumentFilter\InvalidDataTypeException;
+use DocumentFilter\Configuration;
 
 /**
  * Class DocumentServiceTest
@@ -23,9 +25,9 @@ class DocumentServiceTest extends TestCase
     private $documentService;
 
     /**
-     * @var string The path to the test CSV file.
+     * @var ConfigurationInterface The configuration instance.
      */
-    private $testCsvFile;
+    private $config;
 
     /**
      * Sets up the test environment.
@@ -33,11 +35,10 @@ class DocumentServiceTest extends TestCase
     protected function setUp(): void
     {
         // Load configuration
-        $config = require __DIR__ . '/../config.php';
+        $this->config = new Configuration(__DIR__ . '/../config.php');
         
         $this->csvParser = new CsvParser();
-        $this->documentService = new DocumentService($this->csvParser);
-        $this->testCsvFile = $config['test_csv_path'];
+        $this->documentService = new DocumentService($this->csvParser, $this->config);
     }
 
     /**
@@ -45,7 +46,7 @@ class DocumentServiceTest extends TestCase
      */
     public function testParseCsv()
     {
-        $documents = $this->csvParser->parse($this->testCsvFile);
+        $documents = $this->documentService->loadDocuments();
         $this->assertIsArray($documents);
         $this->assertCount(12, $documents);
 
@@ -59,7 +60,7 @@ class DocumentServiceTest extends TestCase
      */
     public function testFilterDocuments()
     {
-        $documents = $this->csvParser->parse($this->testCsvFile);
+        $documents = $this->documentService->loadDocuments();
         $filteredDocuments = $this->documentService->filterDocuments($documents, 'receipt', 354, 1500);
 
         $this->assertIsArray($filteredDocuments);
@@ -79,8 +80,13 @@ class DocumentServiceTest extends TestCase
         $invalidCsv = __DIR__ . '/invalid_document_test_list.csv';
         file_put_contents($invalidCsv, "id;document_type;partner;items\n1;invoice;invalid_json;[{}]");
 
+        $mockConfig = $this->createMock(ConfigurationInterface::class);
+        $mockConfig->method('get')->willReturn($invalidCsv);
+        
+        $this->documentService = new DocumentService($this->csvParser, $mockConfig);
+
         $this->expectException(InvalidDataTypeException::class);
-        $this->csvParser->parse($invalidCsv);
+        $this->documentService->loadDocuments();
 
         unlink($invalidCsv);
     }
