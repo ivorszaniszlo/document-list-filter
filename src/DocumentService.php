@@ -85,7 +85,7 @@ class DocumentService
     {
         return array_reduce($items, function($sum, $currentItem) {
             return $sum + $currentItem->unit_price * $currentItem->quantity;
-        }, 0);
+        }, 0.0);
     }
 
     /**
